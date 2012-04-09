@@ -3,19 +3,19 @@
 	HudHealth
 	{
 		"fieldName"		"HudHealth"
-		"xpos"	"16"
+		"xpos"	"r120"
 		"ypos"	"432"
 		"wide"	"102"
-		"tall"  "36"
+		"tall"  "26"
 		"visible" "1"
 		"enabled" "1"
 
 		"PaintBackgroundType"	"2"
 		
 		"text_xpos" "8"
-		"text_ypos" "20"
+		"text_ypos" "14"
 		"digit_xpos" "50"
-		"digit_ypos" "2"
+		"digit_ypos" "0"
 	}
 	overview
 	{
@@ -40,9 +40,9 @@
 	HudSuit
 	{
 		"fieldName"		"HudSuit"
-		"xpos"	"140"
-		"ypos"	"432"
-		"wide"	"108"
+		"xpos"	"176"
+		"ypos"	"416"
+		"wide"	"117"
 		"tall"  "36"
 		"visible" "1"
 		"enabled" "1"
@@ -50,30 +50,47 @@
 		"PaintBackgroundType"	"2"
 
 		"text_xpos" "8"
-		"text_ypos" "20"
+		"text_ypos" "18"
 		"digit_xpos" "50"
-		"digit_ypos" "2"
+		"digit_ypos" "-1"
 	}
 
 	HudAmmo
 	{
 		"fieldName" "HudAmmo"
 		"xpos"	"r150"
-		"ypos"	"432"
+		"ypos"	"398"
 		"wide"	"136"
-		"tall"  "36"
+		"tall"  "26"
 		"visible" "1"
 		"enabled" "1"
 
 		"PaintBackgroundType"	"2"
 
 		"text_xpos" "8"
-		"text_ypos" "20"
+		"text_ypos" "14"
 		"digit_xpos" "44"
-		"digit_ypos" "2"
+		"digit_ypos" "0"
 		"digit2_xpos" "98"
-		"digit2_ypos" "16"
+		"digit2_ypos" "10"
 	}
+	
+	HudHull
+{
+
+	"fieldName" "HudHull"
+	"visible" "1"
+	"enabled" "1"
+	"xpos" "12"
+	"ypos" "420"
+	"wide" "120"
+	"tall" "10"
+	"text_xpos" "5"
+	"text_ypos" "2"
+	"TextColor" "0 255 0 80"
+	"PaintBackgroundType" "2"
+
+}
 
 	HudAmmoSecondary
 	{

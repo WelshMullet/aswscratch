@@ -1,0 +1,11 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models\weapons\v_models\DTFTSWBXM586\UV1"
+	"$bumpmap" "models\weapons\v_models\DTFTSWBXM586\UV1_bump"
+	"$phong" "1"
+	"$phongexponent" "45"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[1 8 6]"
+
+}
+

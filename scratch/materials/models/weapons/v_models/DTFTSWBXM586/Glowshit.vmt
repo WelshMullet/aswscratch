@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models\weapons\v_models\DTFTSWBXM586\Glowshit"
+	"$additive" "1"
+	"$selfillum" "1"
+
+
+}

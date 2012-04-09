@@ -5,10 +5,10 @@ WeaponData
 	"Bullets"			"1"		// bullets per shoot
 	"CycleTime"			"0.075"		// time between shoots
 
-	"BuiltRightHanded"		"0"
+	"BuiltRightHanded"		"1"
 	
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"			"#SDK_Weapon_MP5"
+	"printname"			"Assault Rifle"
 	"viewmodel"			"models/weapons/v_smg_mp5.mdl"
 	"playermodel"			"models/weapons/w_smg_mp5.mdl"
 	"PlayerAnimationExtension"	"mp5"
