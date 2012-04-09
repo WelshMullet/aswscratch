@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>if EXIST "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
+      <Command>if EXIST "E:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "E:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
 set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
 if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
 if exist ..\..\devtools\bin\vpccrccheck.exe ..\..\devtools\bin\vpccrccheck.exe -crc2 test_swarm.vcproj
@@ -124,14 +124,14 @@ if ERRORLEVEL 1 exit 1
       <OutputFile>$(OutDir)client.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Publishing to D:\Steam\SteamApps\sourcemods\sometest3\bin\.</Message>
-      <Command>if exist "D:\Steam\SteamApps\sourcemods\scratch\bin\." goto ValveStart
-mkdir "D:\Steam\SteamApps\sourcemods\scratch\bin\."
+      <Message>Publishing to E:\Steam\SteamApps\sourcemods\sometest3\bin\.</Message>
+      <Command>if exist "E:\Steam\SteamApps\sourcemods\scratch\bin\." goto ValveStart
+mkdir "E:\Steam\SteamApps\sourcemods\scratch\bin\."
 :ValveStart
-copy "$(TargetDir)"$(TargetFileName) "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"
+copy "$(TargetDir)"$(TargetFileName) "E:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"
 if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).map"
-copy "$(TargetDir)"$(TargetName).pdb "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).pdb"
+if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "E:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).map"
+copy "$(TargetDir)"$(TargetName).pdb "E:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).pdb"
 if ERRORLEVEL 1 goto BuildEventFailed
 goto BuildEventOK
 :BuildEventFailed
@@ -512,6 +512,7 @@ exit 1
     <ClCompile Include="hud_closecaption.cpp" />
     <ClCompile Include="hud_crosshair.cpp" />
     <ClCompile Include="hud_element_helper.cpp" />
+    <ClCompile Include="hud_hull.cpp" />
     <ClCompile Include="hud_lcd.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
@@ -1326,6 +1327,7 @@ exit 1
     <ClInclude Include="commentary_modelviewer.h" />
     <ClInclude Include="foundryhelpers_client.h" />
     <ClInclude Include="..\shared\game_timescale_shared.h" />
+    <ClInclude Include="hud_hull.h" />
     <ClInclude Include="hud_locator_target.h" />
     <ClInclude Include="..\..\engine\iblackbox.h" />
     <ClInclude Include="modelrendersystem.h" />

@@ -31,6 +31,7 @@
 
 ConVar vm_debug( "vm_debug", "0", FCVAR_CHEAT );
 ConVar vm_draw_always( "vm_draw_always", "0" );
+ConVar cl_righthand( "cl_righthand", "1", FCVAR_ARCHIVE, "Use right-handed view models." ); 
 
 void PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg );
 extern float g_flMuzzleFlashScale;
@@ -201,7 +202,7 @@ bool C_BaseViewModel::Interpolate( float currentTime )
 
 inline bool C_BaseViewModel::ShouldFlipViewModel()
 {
-	return false;
+	return cl_righthand.GetBool();
 }
 
 
