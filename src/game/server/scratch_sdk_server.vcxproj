@@ -52,7 +52,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
+<<<<<<< HEAD
       <Command>if EXIST "E:\Steam\SteamApps\sourcemods\sometest3\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "E:\Steam\SteamApps\sourcemods\sometest3\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
+=======
+      <Command>if EXIST "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
+>>>>>>> 002a18496ae66d754ade6ec60761558a3c03aca6
 set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
 if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
 if exist ..\..\devtools\bin\vpccrccheck.exe ..\..\devtools\bin\vpccrccheck.exe -crc2 test_swarm.vcproj
@@ -121,6 +125,7 @@ if ERRORLEVEL 1 exit 1
       <OutputFile>$(OutDir)server.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
+<<<<<<< HEAD
       <Message>Publishing to E:\Steam\SteamApps\sourcemods\sometest4\bin\.</Message>
       <Command>if exist "E:\Steam\SteamApps\sourcemods\sometest3\bin\." goto ValveStart
 mkdir "E:\Steam\SteamApps\sourcemods\sometest3\bin\."
@@ -129,6 +134,16 @@ copy "$(TargetDir)"$(TargetFileName) "E:\Steam\SteamApps\sourcemods\sometest3\bi
 if ERRORLEVEL 1 goto BuildEventFailed
 if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "E:\Steam\SteamApps\sourcemods\sometest3\bin\.\$(TargetName).map"
 copy "$(TargetDir)"$(TargetName).pdb "E:\Steam\SteamApps\sourcemods\sometest3\bin\.\$(TargetName).pdb"
+=======
+      <Message>Publishing to D:\Steam\SteamApps\sourcemods\scratch\bin\.</Message>
+      <Command>if exist "D:\Steam\SteamApps\sourcemods\scratch\bin\." goto ValveStart
+mkdir "D:\Steam\SteamApps\sourcemods\scratch\bin\."
+:ValveStart
+copy "$(TargetDir)"$(TargetFileName) "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"
+if ERRORLEVEL 1 goto BuildEventFailed
+if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).map"
+copy "$(TargetDir)"$(TargetName).pdb "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).pdb"
+>>>>>>> 002a18496ae66d754ade6ec60761558a3c03aca6
 if ERRORLEVEL 1 goto BuildEventFailed
 goto BuildEventOK
 :BuildEventFailed
@@ -138,15 +153,20 @@ exit 1
 :BuildEventOK
 </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy "$(TargetPath)" "$(TargetDir)dummy.$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetPath)" "$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetDir)/$(TargetName).pdb" "$(TargetName).pdb"
+</Command>
+      <Message>Running Output Script</Message>
+      <Outputs>$(TargetDir)dummy.$(TargetFileName);%(Outputs)</Outputs>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>if EXIST "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
-set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
-if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
-if exist ..\..\devtools\bin\vpccrccheck.exe ..\..\devtools\bin\vpccrccheck.exe -crc2 test_swarm.vcproj
-if ERRORLEVEL 1 exit 1
-</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
@@ -214,22 +234,26 @@ if ERRORLEVEL 1 exit 1
       <OutputFile>$(OutDir)server.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Publishing to D:\Steam\SteamApps\sourcemods\scratch\bin\.</Message>
-      <Command>if exist "D:\Steam\SteamApps\sourcemods\scratch\bin\." goto ValveStart
-mkdir "D:\Steam\SteamApps\sourcemods\scratch\bin\."
-:ValveStart
-copy "$(TargetDir)"$(TargetFileName) "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"
-if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).map"
-copy "$(TargetDir)"$(TargetName).pdb "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).pdb"
-if ERRORLEVEL 1 goto BuildEventFailed
-goto BuildEventOK
-:BuildEventFailed
-echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***
-del /q "$(TargetDir)"$(TargetFileName)
-exit 1
-:BuildEventOK</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy "$(TargetPath)" "$(TargetDir)dummy.$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetPath)" "$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetDir)/$(TargetName).pdb" "$(TargetName).pdb"
+</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Running Output Script</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(TargetDir)dummy.$(TargetFileName);%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\..\vpc_scripts\loadaddress.vpc" />
@@ -247,6 +271,7 @@ exit 1
     <ClCompile Include="..\shared\achievement_saverestore.cpp" />
     <ClCompile Include="..\shared\achievementmgr.cpp" />
     <ClCompile Include="..\shared\activitylist.cpp" />
+    <ClCompile Include="..\shared\predicted_viewmodel.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_fx_shared.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_gamemovement.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_gamerules.cpp" />
@@ -694,6 +719,7 @@ exit 1
     <ClCompile Include="scripted.cpp" />
     <ClCompile Include="scriptedtarget.cpp" />
     <ClCompile Include="sdk\npc_infected.cpp" />
+    <ClCompile Include="sdk\sdk_bot_temp.cpp" />
     <ClCompile Include="sdk\sdk_client.cpp" />
     <ClCompile Include="sdk\sdk_fire.cpp" />
     <ClCompile Include="sdk\sdk_gameinterface.cpp" />
@@ -888,6 +914,7 @@ exit 1
     <ClInclude Include="..\shared\achievementmgr.h" />
     <ClInclude Include="..\shared\activitylist.h" />
     <ClInclude Include="..\shared\ai_activity.h" />
+    <ClInclude Include="..\shared\predicted_viewmodel.h" />
     <ClInclude Include="..\shared\sdk\sdk_fx_shared.h" />
     <ClInclude Include="..\shared\sdk\sdk_gamerules.h" />
     <ClInclude Include="..\shared\sdk\sdk_movedata.h" />
@@ -1067,7 +1094,6 @@ exit 1
     <ClInclude Include="hierarchy.h" />
     <ClInclude Include="..\shared\hintmessage.h" />
     <ClInclude Include="..\shared\hintsystem.h" />
-    <ClInclude Include="..\..\common\hl2orange.spa.h" />
     <ClInclude Include="hltvdirector.h" />
     <ClInclude Include="..\shared\ichoreoeventcallback.h" />
     <ClInclude Include="..\shared\igamesystem.h" />
@@ -1146,6 +1172,7 @@ exit 1
     <ClInclude Include="scriptedtarget.h" />
     <ClInclude Include="..\shared\scriptevent.h" />
     <ClInclude Include="..\..\public\server_class.h" />
+    <ClInclude Include="sdk\sdk_bot_temp.h" />
     <ClInclude Include="sdk\sdk_fire.h" />
     <ClInclude Include="sdk\sdk_player.h" />
     <ClInclude Include="serverbenchmark_base.h" />
@@ -1215,13 +1242,11 @@ exit 1
     <ClInclude Include="hl2\npc_attackchopper.h" />
     <ClInclude Include="hl2\npc_bullseye.h" />
     <ClInclude Include="hl2\rotorwash.h" />
-    <ClInclude Include="..\..\public\mathlib\amd3dx.h" />
     <ClInclude Include="..\shared\ammodef.h" />
     <ClInclude Include="..\shared\base_playeranimstate.h" />
     <ClInclude Include="base_transmit_proxy.h" />
     <ClInclude Include="..\..\public\basehandle.h" />
     <ClInclude Include="basetempentity.h" />
-    <ClInclude Include="..\..\public\basetypes.h" />
     <ClInclude Include="..\shared\beam_flags.h" />
     <ClInclude Include="..\..\public\tier1\bitbuf.h" />
     <ClInclude Include="..\..\public\bittools.h" />
@@ -1231,7 +1256,6 @@ exit 1
     <ClInclude Include="..\..\public\bspfile.h" />
     <ClInclude Include="..\..\public\bspflags.h" />
     <ClInclude Include="..\..\public\mathlib\bumpvects.h" />
-    <ClInclude Include="..\..\public\cache_user.h" />
     <ClInclude Include="..\shared\cellcoord.h" />
     <ClInclude Include="..\..\public\tier1\characterset.h" />
     <ClInclude Include="..\..\public\tier1\checksum_md5.h" />
@@ -1242,7 +1266,6 @@ exit 1
     <ClInclude Include="coerciblevariant_t.h" />
     <ClInclude Include="..\..\public\vphysics\collision_set.h" />
     <ClInclude Include="..\..\public\Color.h" />
-    <ClInclude Include="..\..\public\commonmacros.h" />
     <ClInclude Include="..\..\public\mathlib\compressed_light_cube.h" />
     <ClInclude Include="..\..\public\mathlib\compressed_vector.h" />
     <ClInclude Include="..\..\public\const.h" />
@@ -1250,7 +1273,6 @@ exit 1
     <ClInclude Include="..\..\public\coordsize.h" />
     <ClInclude Include="cplane.h" />
     <ClInclude Include="damagemodifier.h" />
-    <ClInclude Include="..\..\public\tier1\datalru.h" />
     <ClInclude Include="..\..\public\datamap.h" />
     <ClInclude Include="..\..\public\tier0\dbg.h" />
     <ClInclude Include="..\shared\death_pose.h" />
@@ -1303,7 +1325,6 @@ exit 1
     <ClInclude Include="..\..\public\vstdlib\IKeyValuesSystem.h" />
     <ClInclude Include="ilagcompensationmanager.h" />
     <ClInclude Include="..\..\public\vgui\ILocalize.h" />
-    <ClInclude Include="..\..\public\ImageLoader.h" />
     <ClInclude Include="..\..\public\materialsystem\imaterial.h" />
     <ClInclude Include="..\..\public\materialsystem\imaterialsystem.h" />
     <ClInclude Include="..\..\public\materialsystem\imaterialvar.h" />
@@ -1324,7 +1345,6 @@ exit 1
     <ClInclude Include="..\shared\itempents.h" />
     <ClInclude Include="..\..\public\engine\ivdebugoverlay.h" />
     <ClInclude Include="..\shared\IVehicle.h" />
-    <ClInclude Include="..\..\public\engine\IVEngineCache.h" />
     <ClInclude Include="..\..\public\engine\ivmodelinfo.h" />
     <ClInclude Include="..\..\public\tier1\KeyValues.h" />
     <ClInclude Include="..\..\public\tier0\l2cache.h" />
@@ -1344,7 +1364,6 @@ exit 1
     <ClInclude Include="npc_vehicledriver.h" />
     <ClInclude Include="..\shared\npcevent.h" />
     <ClInclude Include="..\..\public\vphysics\object_hash.h" />
-    <ClInclude Include="..\shared\particle_dispatch_shared.h" />
     <ClInclude Include="particle_system.h" />
     <ClInclude Include="physics_cannister.h" />
     <ClInclude Include="physics_fx.h" />
@@ -1404,7 +1423,6 @@ exit 1
     <ClInclude Include="..\shared\util_shared.h" />
     <ClInclude Include="..\..\public\UtlCachedFileData.h" />
     <ClInclude Include="..\..\public\tier1\utldict.h" />
-    <ClInclude Include="..\..\public\tier1\utlfixedlinkedlist.h" />
     <ClInclude Include="..\..\public\tier1\utlfixedmemory.h" />
     <ClInclude Include="..\..\public\tier1\utlhash.h" />
     <ClInclude Include="..\..\public\tier1\utllinkedlist.h" />
@@ -1419,8 +1437,6 @@ exit 1
     <ClInclude Include="variant_t.h" />
     <ClInclude Include="..\..\public\vcollide.h" />
     <ClInclude Include="..\..\public\vcollide_parse.h" />
-    <ClInclude Include="..\..\public\tier0\vcr_shared.h" />
-    <ClInclude Include="..\..\public\tier0\vcrmode.h" />
     <ClInclude Include="..\..\public\mathlib\vector.h" />
     <ClInclude Include="..\..\public\mathlib\vector2d.h" />
     <ClInclude Include="..\..\public\mathlib\vector4d.h" />

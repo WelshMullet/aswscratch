@@ -1823,9 +1823,24 @@
     <ClCompile Include="hud_weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="hud_hull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="..\shared\predicted_viewmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\vgui\nb_horiz_list.cpp">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\vgui\nb_select_level_entry.cpp">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\vgui\nb_select_level_panel.cpp">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClCompile>
+>>>>>>> 002a18496ae66d754ade6ec60761558a3c03aca6
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="achievement_notification_panel.h">
@@ -3985,9 +4000,24 @@
     <ClInclude Include="..\shared\sdk\sdk_player_shared.h">
       <Filter>Source Files\sdk\Shared</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="hud_hull.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="..\shared\predicted_viewmodel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vgui\nb_horiz_list.h">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vgui\nb_select_level_entry.h">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vgui\nb_select_level_panel.h">
+      <Filter>Source Files\sdk\vgui</Filter>
+    </ClInclude>
+>>>>>>> 002a18496ae66d754ade6ec60761558a3c03aca6
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\bitmap.lib">

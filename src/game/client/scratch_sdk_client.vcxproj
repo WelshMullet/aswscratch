@@ -141,15 +141,20 @@ exit 1
 :BuildEventOK
 </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy "$(TargetPath)" "$(TargetDir)dummy.$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetPath)" "$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetDir)/$(TargetName).pdb" "$(TargetName).pdb"
+</Command>
+      <Message>Running Output Script</Message>
+      <Outputs>$(TargetDir)dummy.$(TargetFileName);%(Outputs)</Outputs>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>if EXIST "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)" for /f "delims=" %%A in (%27attrib "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"%27) do set valveTmpIsReadOnly="%%A"
-set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
-if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
-if exist ..\..\devtools\bin\vpccrccheck.exe ..\..\devtools\bin\vpccrccheck.exe -crc2 test_swarm.vcproj
-if ERRORLEVEL 1 exit 1
-</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
@@ -218,23 +223,20 @@ if ERRORLEVEL 1 exit 1
       <OutputFile>$(OutDir)client.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Publishing to D:\Steam\SteamApps\sourcemods\scratch\bin\.</Message>
-      <Command>if exist "D:\Steam\SteamApps\sourcemods\scratch\bin\." goto ValveStart
-mkdir "D:\Steam\SteamApps\sourcemods\scratch\bin\."
-:ValveStart
-copy "$(TargetDir)"$(TargetFileName) "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetFileName)"
-if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)"$(TargetName).map copy "$(TargetDir)"$(TargetName).map "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).map"
-copy "$(TargetDir)"$(TargetName).pdb "D:\Steam\SteamApps\sourcemods\scratch\bin\.\$(TargetName).pdb"
-if ERRORLEVEL 1 goto BuildEventFailed
-goto BuildEventOK
-:BuildEventFailed
-echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***
-del /q "$(TargetDir)"$(TargetFileName)
-exit 1
-:BuildEventOK
-</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy "$(TargetPath)" "$(TargetDir)dummy.$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetPath)" "$(TargetFileName)"
+cscript //nologo ..\..\dllcopy.wsf "$(TargetDir)/$(TargetName).pdb" "$(TargetName).pdb"
+</Command>
+      <Message>Running Output Script</Message>
+      <Outputs>$(TargetDir)dummy.$(TargetFileName);%(Outputs)</Outputs>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="client_base.vpc" />
@@ -252,6 +254,7 @@ exit 1
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\shared\predicted_viewmodel.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_fx_shared.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_gamemovement.cpp" />
     <ClCompile Include="..\shared\sdk\sdk_gamerules.cpp" />
@@ -1105,6 +1108,9 @@ exit 1
     <ClCompile Include="sdk\sdk_prediction.cpp" />
     <ClCompile Include="sdk\vgui\nb_button.cpp" />
     <ClCompile Include="sdk\vgui\nb_header_footer.cpp" />
+    <ClCompile Include="sdk\vgui\nb_horiz_list.cpp" />
+    <ClCompile Include="sdk\vgui\nb_select_level_entry.cpp" />
+    <ClCompile Include="sdk\vgui\nb_select_level_panel.cpp" />
     <ClCompile Include="sdk\vgui\sdk_hud_ammo.cpp" />
     <ClCompile Include="sdk\vgui\sdk_hud_chat.cpp" />
     <ClCompile Include="sdk\vgui\sdk_hud_health.cpp" />
@@ -1297,6 +1303,7 @@ exit 1
     <ClCompile Include="toolframework_client.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\shared\predicted_viewmodel.h" />
     <ClInclude Include="..\shared\sdk\sdk_fx_shared.h" />
     <ClInclude Include="..\shared\sdk\sdk_gamerules.h" />
     <ClInclude Include="..\shared\sdk\sdk_movedata.h" />
@@ -1445,6 +1452,9 @@ exit 1
     <ClInclude Include="sdk\sdk_input.h" />
     <ClInclude Include="sdk\vgui\nb_button.h" />
     <ClInclude Include="sdk\vgui\nb_header_footer.h" />
+    <ClInclude Include="sdk\vgui\nb_horiz_list.h" />
+    <ClInclude Include="sdk\vgui\nb_select_level_entry.h" />
+    <ClInclude Include="sdk\vgui\nb_select_level_panel.h" />
     <ClInclude Include="sdk\vgui\sdk_hud_chat.h" />
     <ClInclude Include="sdk\vgui\sdk_loading_panel.h" />
     <ClInclude Include="sdk\vgui\sdk_logo_panel.h" />
@@ -1538,7 +1548,6 @@ exit 1
     <ClInclude Include="functionproxy.h" />
     <ClInclude Include="fx.h" />
     <ClInclude Include="fx_blood.h" />
-    <ClInclude Include="cstrike\fx_cs_blood.h" />
     <ClInclude Include="fx_discreetline.h" />
     <ClInclude Include="fx_envelope.h" />
     <ClInclude Include="fx_explosion.h" />
@@ -1570,7 +1579,6 @@ exit 1
     <ClInclude Include="hud_macros.h" />
     <ClInclude Include="hud_numericdisplay.h" />
     <ClInclude Include="hud_pdump.h" />
-    <ClInclude Include="cstrike\hud_radar.h" />
     <ClInclude Include="hud_vehicle.h" />
     <ClInclude Include="hudelement.h" />
     <ClInclude Include="hudtexturehandle.h" />
@@ -1892,7 +1900,6 @@ exit 1
     <ClInclude Include="..\shared\animation.h" />
     <ClInclude Include="..\shared\apparent_velocity_helper.h" />
     <ClInclude Include="..\shared\base_playeranimstate.h" />
-    <ClInclude Include="..\shared\cstrike\basecsgrenade_projectile.h" />
     <ClInclude Include="..\shared\baseentity_shared.h" />
     <ClInclude Include="..\shared\basegrenade_shared.h" />
     <ClInclude Include="..\shared\hl2\basehlcombatweapon_shared.h" />
@@ -1920,7 +1927,6 @@ exit 1
     <ClInclude Include="..\shared\eventlist.h" />
     <ClInclude Include="..\shared\func_dust_shared.h" />
     <ClInclude Include="..\shared\func_ladder.h" />
-    <ClInclude Include="..\shared\cstrike\fx_cs_shared.h" />
     <ClInclude Include="..\shared\gameeventdefs.h" />
     <ClInclude Include="..\shared\gamemovement.h" />
     <ClInclude Include="..\shared\gamerules.h" />
@@ -1999,9 +2005,6 @@ exit 1
     <ClInclude Include="..\shared\voice_gamemgr.h" />
     <ClInclude Include="..\shared\voice_status.h" />
     <ClInclude Include="..\shared\vphysics_sound.h" />
-    <ClInclude Include="..\shared\cstrike\weapon_flashbang.h" />
-    <ClInclude Include="..\shared\cstrike\weapon_hegrenade.h" />
-    <ClInclude Include="..\shared\weapon_ifmsteadycam.h" />
     <ClInclude Include="..\shared\weapon_parse.h" />
     <ClInclude Include="..\shared\weapon_proficiency.h" />
     <ClInclude Include="game_controls\baseviewport.h" />

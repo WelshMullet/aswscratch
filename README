@@ -5,8 +5,8 @@ Provides a basic sdk template for Alien Swarm including the following features:
 - All specific Alien Swarm code is stripped from the project
 - SDK Player with DOD model (from the 2007 sdk template)
 - Player Animation State based off the Alien Swarm animation state
-- Most of the Game UI is left intact, although the campaign and match 
-  making options won't work.
+- Most of the Game UI is left intact. The campaign and mission select options 
+  are replaced by a simple level selector (reads from maplist.txt).
 
 Video:
 http://www.youtube.com/watch?v=Lq3b-bSdd1k
@@ -16,17 +16,16 @@ Usage
 ==============================================================
 1. Copy the scratch folder into your sourcemods directory.
 2. Open scratch_sdk.sln in Visual Studio 2010.
-3. Change paths so the binaries are copied into the correct folder.
-     - Right click the server project and open properties
-     - Go to Configuration Properties -> Build Events
-     - Ensure paths Pre-Build and Post-Build events point to your sourcemods folder.
-     - Do the same for the client project
+3. A script is included to automatically copy the binaries
+   into the mod bin folder (dllcopy.wsf). Modify this script
+   if you want to change the output path (or remove it and 
+   change the output paths in Visual Studio).
 4. Compile
 5. Check if binaries are copied correctly into your mods bin folder.
 6. Either run pakfiles.bat (in the mod folder) or specify "-override_vpk"
    in the launch parameters. Otherwise some files will be overriden
-   by the alien swarm files (like scripts/HudLayout.res).
-6. Start the mod, open the console and type "map sdk_teams_hdr"
+   by the Alien Swarm files (for example, scripts/HudLayout.res).
+6. Start the mod, open the console and type "map sdk_teams_hdr".
 
 ==============================================================
 VPK
@@ -36,6 +35,14 @@ To solve this use either the "-override_vpk" or pack the files
 being overriden in a vpk file (see pakfiles.bat/txt).
 
 ==============================================================
+Sounds
+==============================================================
+When the file "maps\soundcache\_master.cache" is not present,
+it will rebuild the audio cache the next time you start the mod.
+When you make changes to sounds, you will need to execute 
+snd_updateaudiocache.
+
+==============================================================
 Alien Swarm Consistency checks
 ==============================================================
 ClientPrecache in client.cpp marks several alien swarm files
@@ -43,6 +50,34 @@ for consistency checks (ForceExactFile..) and prevent the player
 from joining if the files don't match. You might want to change
 these. You can also use sv_consistency convar to turn these checks 
 off.
+
+==============================================================
+Customizing the Main Menu colors
+==============================================================
+In case you want to modify the colors of the main menu, the
+following is a quick list of places which you will want to modify
+because they contain hard coded colors:
+
+basemodpanel.cpp - SetScheme - most panels get the scheme from this panel, so you can change the scheme res file here.
+
+basemodframe.cpp
+    DrawGenericBackground - Used in the generic confirmation screen (e.g. "do you want to exit the game"). Contains hard coded background colors.
+    
+sdk/gameui/vhybridbutton.cpp -> Used in flyout buttons (main menu buttons and other buttons that result in a submenu)
+    PaintButtonEx - Depending on the style, a different color or size is used. Alien Swarm uses BUTTON_ALIENSWARMMENUBUTTON and BUTTON_ALIENSWARMMENUBUTTONSMALL.
+
+sdk/vgui/nb_header_foot.cpp - Provides a generic header/footer/background for panels. Used in "Create Game" and "Options" menus.
+    ApplySchemeSettings - Change back background color. Alien Swarm uses a blueish tint.
+    CNB_Gradient_Bar::PaintBackground - Change background and border color
+
+sdk/vgui/nb_button.cpp - Generic button class used about everywhere where vhybridbutton is not used. Contains some hard coded colors.
+
+sdk/gameui/Optionssubkeyboard.cpp - Does not copy the scheme from basemodpanel, so you might want to change this.
+
+==============================================================
+Matchmaking
+==============================================================
+
 
 ==============================================================
 Base Code Changes
